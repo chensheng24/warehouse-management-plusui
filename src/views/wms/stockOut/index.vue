@@ -4,6 +4,9 @@
       <div v-show="showSearch" class="mb-[10px]">
         <el-card shadow="hover">
           <el-form ref="queryFormRef" :model="queryParams" :inline="true">
+            <el-form-item label="出库单据" prop="stockOutNo">
+              <el-input v-model="queryParams.stockOutNo" placeholder="请输入出库单据" clearable @keyup.enter="handleQuery" />
+            </el-form-item>
             <el-form-item label="商品名称" prop="productName">
               <el-input v-model="queryParams.productName" placeholder="请输入商品名称" clearable @keyup.enter="handleQuery" />
             </el-form-item>
@@ -12,6 +15,9 @@
             </el-form-item>
             <el-form-item label="客户" prop="customer">
               <el-input v-model="queryParams.customer" placeholder="请输入客户" clearable @keyup.enter="handleQuery" />
+            </el-form-item>
+            <el-form-item label="出库时间" prop="stockOutTime">
+              <el-date-picker clearable v-model="queryParams.stockOutTime" type="date" value-format="YYYY-MM-DD" placeholder="请选择出库时间" />
             </el-form-item>
             <el-form-item>
               <el-button type="primary" icon="Search" @click="handleQuery">搜索</el-button>
@@ -45,10 +51,15 @@
 
       <el-table v-loading="loading" border :data="stockOutList" @selection-change="handleSelectionChange">
         <el-table-column type="selection" width="55" align="center" />
-
+        <el-table-column label="出库单据" align="center" prop="stockOutNo" />
         <el-table-column label="商品名称" align="center" prop="productName" />
         <el-table-column label="出库数量" align="center" prop="quantity" />
         <el-table-column label="客户" align="center" prop="customer" />
+        <el-table-column label="出库时间" align="center" prop="stockOutTime" width="180">
+          <template #default="scope">
+            <span>{{ parseTime(scope.row.stockOutTime, '{y}-{m}-{d}') }}</span>
+          </template>
+        </el-table-column>
         <el-table-column label="备注" align="center" prop="remark" />
         <el-table-column label="操作" align="center" fixed="right" class-name="small-padding fixed-width">
           <template #default="scope">
@@ -67,6 +78,9 @@
     <!-- 添加或修改出库管理对话框 -->
     <el-dialog :title="dialog.title" v-model="dialog.visible" width="500px" append-to-body>
       <el-form ref="stockOutFormRef" :model="form" :rules="rules" label-width="80px">
+        <el-form-item label="出库单据" prop="stockOutNo">
+          <el-input v-model="form.stockOutNo" placeholder="请输入出库单据" />
+        </el-form-item>
         <el-form-item label="商品ID" prop="productId">
           <el-input v-model="form.productId" placeholder="请输入商品ID" />
         </el-form-item>
@@ -87,6 +101,10 @@
         </el-form-item>
         <el-form-item label="客户" prop="customer">
           <el-input v-model="form.customer" placeholder="请输入客户" />
+        </el-form-item>
+        <el-form-item label="出库时间" prop="stockOutTime">
+          <el-date-picker clearable v-model="form.stockOutTime" type="datetime" value-format="YYYY-MM-DD HH:mm:ss" placeholder="请选择出库时间">
+          </el-date-picker>
         </el-form-item>
         <el-form-item label="" prop="remark">
           <el-input v-model="form.remark" type="textarea" placeholder="请输入内容" />
@@ -127,11 +145,13 @@ const dialog = reactive<DialogOption>({
 });
 
 const initFormData: StockOutForm = {
+  stockOutNo: undefined,
   id: undefined,
   productId: undefined,
   productName: undefined,
   quantity: undefined,
   customer: undefined,
+  stockOutTime: undefined,
   remark: undefined
 };
 const data = reactive<PageData<StockOutForm, StockOutQuery>>({
@@ -140,9 +160,11 @@ const data = reactive<PageData<StockOutForm, StockOutQuery>>({
     pageNum: 1,
     pageSize: 10,
     productId: undefined,
+    stockOutNo: undefined,
     productName: undefined,
     quantity: undefined,
     customer: undefined,
+    stockOutTime: undefined,
     params: {}
   },
   rules: {

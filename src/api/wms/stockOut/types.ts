@@ -37,6 +37,11 @@ export interface StockOutForm extends BaseEntity {
   id?: string | number;
 
   /**
+   * 出库单据
+   */
+  stockOutNo?: string | number;
+
+  /**
    * 商品ID
    */
   productId?: string | number;
@@ -54,12 +59,21 @@ export interface StockOutForm extends BaseEntity {
   customer?: string;
 
   /**
+   * 出库时间
+   */
+  stockOutTime?: string;
+
+  /**
    *
    */
   remark?: string;
 }
 
 export interface StockOutQuery extends PageQuery {
+  /**
+   * 出库单据
+   */
+  stockOutNo?: string | number;
   /**
    * 商品ID
    */
@@ -79,6 +93,11 @@ export interface StockOutQuery extends PageQuery {
    * 客户
    */
   customer?: string;
+
+  /**
+   * 出库时间
+   */
+  stockOutTime?: string;
 
   /**
    * 日期范围参数

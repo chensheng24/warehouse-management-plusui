@@ -37,6 +37,11 @@ export interface StockInForm extends BaseEntity {
   id?: string | number;
 
   /**
+   * 入库单据
+   */
+  stockInNo?: string | number;
+
+  /**
    * 商品ID
    */
   productId?: string | number;
@@ -60,6 +65,8 @@ export interface StockInForm extends BaseEntity {
    *
    */
   remark?: string;
+
+  stockInTime?: string;
 }
 
 export interface StockInQuery extends PageQuery {
@@ -69,6 +76,11 @@ export interface StockInQuery extends PageQuery {
   id?: string | number;
 
   /**
+   * 入库单据
+   */
+  stockInNo?: string | number;
+
+  /**
    * 商品ID
    */
   productId?: string | number;
@@ -92,6 +104,10 @@ export interface StockInQuery extends PageQuery {
    *
    */
   remark?: string;
+  /**
+   * 入库时间
+   */
+  stockInTime: string;
 
   /**
    * 日期范围参数

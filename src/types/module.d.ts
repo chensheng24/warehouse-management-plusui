@@ -5,7 +5,7 @@ import auth from '@/plugins/auth';
 import cache from '@/plugins/cache';
 import animate from '@/animate';
 import { useDict } from '@/utils/dict';
-import { handleTree, addDateRange, selectDictLabel, selectDictLabels, parseTime } from '@/utils/ruoyi';
+import { handleTree, addDateRange, addNumberRange, selectDictLabel, selectDictLabels, parseTime } from '@/utils/ruoyi';
 import { getConfigKey, updateConfigByKey } from '@/api/system/config';
 import { download as rd } from '@/utils/request';
 import type { LanguageType } from '@/lang';
@@ -29,6 +29,7 @@ declare module 'vue' {
 
     useDict: typeof useDict;
     addDateRange: typeof addDateRange;
+    addNumberRange: typeof addNumberRange;
     download: typeof rd;
     handleTree: typeof handleTree;
     getConfigKey: typeof getConfigKey;

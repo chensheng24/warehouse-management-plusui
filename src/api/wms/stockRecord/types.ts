@@ -1,6 +1,6 @@
 export interface StockRecordVO {
   /**
-   * 
+   *
    */
   id: string | number;
 
@@ -43,12 +43,11 @@ export interface StockRecordVO {
    * 操作人
    */
   operator: string;
-
 }
 
 export interface StockRecordForm extends BaseEntity {
   /**
-   * 
+   *
    */
   id?: string | number;
 
@@ -88,18 +87,31 @@ export interface StockRecordForm extends BaseEntity {
   bizType?: string;
 
   /**
+   * 创建时间
+   */
+  createTime?: string;
+
+  /**
    * 操作人
    */
   operator?: string;
-
 }
 
 export interface StockRecordQuery extends PageQuery {
+  /**
+   * 单据编号
+   */
+  recordNo?: string;
 
   /**
    * 商品ID
    */
   productId?: string | number;
+
+  /**
+   * 商品名称
+   */
+  productName?: string | number;
 
   /**
    * 变动类型(IN/OUT)
@@ -135,6 +147,16 @@ export interface StockRecordQuery extends PageQuery {
    * 操作人
    */
   operator?: string;
+
+  /**
+   * 创建时间
+   */
+  createTime?: string;
+
+  /**
+   * 业务日期
+   */
+  businessTime?: string;
 
   /**
    * 日期范围参数

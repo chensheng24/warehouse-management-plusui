@@ -49,15 +49,18 @@
       <el-table v-loading="loading" border :data="stockInList" @selection-change="handleSelectionChange">
         <el-table-column type="selection" width="55" align="center" />
         <!-- <el-table-column label="" align="center" prop="id" v-if="true" /> -->
+        <el-table-column label="入库单据" align="center" prop="stockInNo" />
         <el-table-column label="商品ID" align="center" prop="productId" />
         <el-table-column label="商品名称" align="center" prop="productName" />
         <el-table-column label="入库数量" align="center" prop="quantity" />
         <el-table-column label="供应商" align="center" prop="supplier" />
+        <el-table-column label="入库时间" align="center" prop="stockInTime" width="180">
+          <template #default="scope">
+            <span>{{ parseTime(scope.row.stockInTime, '{y}-{m}-{d}') }}</span>
+          </template>
+        </el-table-column>
         <el-table-column label="操作" align="center" fixed="right" class-name="small-padding fixed-width">
           <template #default="scope">
-            <el-tooltip content="修改" placement="top">
-              <el-button link type="primary" icon="Edit" @click="handleUpdate(scope.row)" v-hasPermi="['wms:stockIn:edit']"></el-button>
-            </el-tooltip>
             <el-tooltip content="删除" placement="top">
               <el-button link type="primary" icon="Delete" @click="handleDelete(scope.row)" v-hasPermi="['wms:stockIn:remove']"></el-button>
             </el-tooltip>
@@ -129,10 +132,12 @@ const dialog = reactive<DialogOption>({
 });
 const initFormData: StockInForm = {
   id: undefined,
+  stockInNo: undefined,
   productId: undefined,
   productName: undefined,
   quantity: undefined,
   supplier: undefined,
+  stockInTime: undefined,
   remark: undefined
 };
 const data = reactive<PageData<StockInForm, StockInQuery>>({
@@ -141,15 +146,18 @@ const data = reactive<PageData<StockInForm, StockInQuery>>({
     pageNum: 1,
     pageSize: 10,
     id: undefined,
+    stockInNo: undefined,
     productId: undefined,
     quantity: undefined,
     supplier: undefined,
     remark: undefined,
+    stockInTime: undefined,
     productName: undefined,
     params: {}
   },
   rules: {
     id: [{ required: true, message: '不能为空', trigger: 'blur' }],
+    stockInNo: [{ required: true, message: '入库单据不能为空', trigger: 'blur' }],
     productId: [{ required: true, message: '商品ID不能为空', trigger: 'blur' }],
     quantity: [{ required: true, message: '入库数量不能为空', trigger: 'blur', pattern: /^[0-9]+$/ }]
   }

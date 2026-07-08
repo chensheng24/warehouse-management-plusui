@@ -63,6 +63,26 @@ export const addDateRange = (params: any, dateRange: any[], propName?: string) =
   return search;
 };
 
+/**
+ * 添加数字范围
+ * @param params
+ * @param dataRange
+ * @param propName
+ */
+export const addNumberRange = (params: any, dateRange: any[], propName?: string) => {
+  const search = params;
+  search.params = typeof search.params === 'object' && search.params !== null && !Array.isArray(search.params) ? search.params : {};
+  dateRange = Array.isArray(dateRange) ? dateRange : [];
+  if (typeof propName === 'undefined') {
+    search.params['beginNumber'] = dateRange[0];
+    search.params['endNumber'] = dateRange[1];
+  } else {
+    search.params['begin' + propName] = dateRange[0];
+    search.params['end' + propName] = dateRange[1];
+  }
+  return search;
+};
+
 // 回显数据字典
 export const selectDictLabel = (datas: any, value: number | string) => {
   if (value === undefined) {

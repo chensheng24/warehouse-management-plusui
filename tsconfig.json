@@ -2,6 +2,8 @@
   "$schema": "https://json.schemastore.org/tsconfig",
   "compilerOptions": {
     "baseUrl": ".",
+    // Silence deprecation warning for baseUrl until TypeScript 7 migration
+    "ignoreDeprecations": "6.0",
     // https://vite.dev/config/build-options.html#build-target
     "target": "ES2020",
     "module": "ESNext",
